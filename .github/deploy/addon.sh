@@ -8,7 +8,7 @@ APP_DIR="$GITHUB_WORKSPACE"
 [[ -d "${APP_DIR:-}" ]] || emergency "$APP_DIR path doesn't exits. Aborting.."
 
 setup_basic() {
-    info "Init and Validations."
+    info "Init and Validations: Started"
     hosts_file="$GITHUB_WORKSPACE/.github/hosts.yml"
     REMOTE_USER=$(shyaml get-value "${GITHUB_BRANCH}.user" <"$hosts_file" 2>/dev/null || true)
     REMOTE_HOST=$(shyaml get-value "${GITHUB_BRANCH}.hostname" <"$hosts_file" 2>/dev/null  || true)
@@ -30,25 +30,21 @@ setup_basic() {
     RELEASE_FOLDER_NAME="releases/$(date +'%d-%b-%Y--%H-%M')"
     APP_REMOTE_RELEASE_PATH="${REMOTE_PATH}/app/${RELEASE_FOLDER_NAME}"
 
-    info "Everything looks good !"
+    info "Init and Validations: Everything looks good !"
 }
 
 handle_before_build() {
     # create folder
-    info "Deploy code to server."
     cd ~/
     mkdir -p "$RELEASE_FOLDER_NAME"
-    echo "::group::local rsync log."
-    rsync -avzhP "${APP_DIR}/" "${RELEASE_FOLDER_NAME}/"
-    echo "::endgroup::"
+    rsync -azh "${APP_DIR}/" "${RELEASE_FOLDER_NAME}/"
 }
 
 handle_release(){
+    info "Sync code with server: Started"
     remote_execute "$REMOTE_PATH" "mkdir -p ${REMOTE_PATH}/app/releases"
-    echo "::group::remote rsync log."
-    rsync -avzhP "${RELEASE_FOLDER_NAME}" "$REMOTE_USER"@"$REMOTE_HOST":"$REMOTE_PATH/app/releases/"
-    echo "::endgroup::"
-    info "Deployed code to server."
+    rsync -azh "${RELEASE_FOLDER_NAME}" "$REMOTE_USER"@"$REMOTE_HOST":"$REMOTE_PATH/app/releases/"
+    info "Sync code with server: Completed"
 }
 
 maybe_install_node_dep() {
@@ -60,11 +56,14 @@ maybe_install_node_dep() {
             sed -E 's/.*"([^"]+)".*/\1/') &&
             curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_LATEST_VER/install.sh" | bash
 
-        export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+        export NVM_DIR="$([[ -z "${XDG_CONFIG_HOME-}" ]] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+        [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" || true
+
         nvm install "$NODE_VERSION"
         nvm use "$NODE_VERSION"
+
+    echo "Installed Node Version -> $(node --version)"
     fi
 }
 
@@ -77,7 +76,7 @@ handle_build_server() {
 
     NODE_VERSION=18
 
-    echo "::group::Install Node -> $NODE_VERSION log."
+    echo "::group::Node Installation -> $NODE_VERSION log."
     maybe_install_node_dep
     echo "::endgroup::"
 
@@ -90,7 +89,6 @@ handle_build_server() {
     npm run production
     BUILD_STATUS="$?"
     echo "::endgroup::"
-
     # check if build was successful
     if [[ "$BUILD_STATUS" -gt 0 ]]; then
         error "App Build: Failed"
@@ -101,6 +99,7 @@ handle_build_server() {
 
     cd ~/
 }
+
 handle_after_release() {
     info "Symlink latest deployment."
     remote_execute "$APP_PATH" "ln -sfn $RELEASE_FOLDER_NAME current"
