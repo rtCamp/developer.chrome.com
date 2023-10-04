@@ -1,0 +1,46 @@
+---
+layout: 'layouts/landing.njk'
+title: 'The Privacy Sandbox'
+description: 'A series of proposals to satisfy cross-site use cases without third-party cookies or other tracking mechanisms.'
+sections:
+  measure_ads:
+    - url: /docs/privacy-sandbox/attribution-reporting
+      title: Attribution Reporting
+      description: A proposal to measure ad conversions without cross-site third-party tracking.
+    - url: /docs/privacy-sandbox/attribution-reporting/system-overview
+      title: System overview
+      description: Understand how each service connects end-to-end for Attribution Reporting.
+    - url: /docs/privacy-sandbox/attribution-reporting-experiment
+      title: Experiment and participate
+      description: A step-by-step guide to implement and test the API. Play with demo code and share your feedback.
+    - url: /docs/privacy-sandbox/attribution-reporting-updates
+      title: API updates
+      description: A quick reference to how the proposal has changed to address community feedback.
+---
+
+{% from 'macros/cards/hero-card-wide.njk' import heroCardWide with context %}
+{% from 'macros/cards/blog-card.njk' import blogCard with context %}
+{% from 'macros/icon.njk' import icon with context %}
+{% from 'macros/landing-section.njk' import landingSection with context %}
+{% from 'macros/landing-deco.njk' import landingDeco with context %}
+{% from 'macros/landing-section-expanded.njk' import landingSectionExpanded with context %}
+{% from 'macros/landing-section-usecases.njk' import landingSectionUseCases with context %}
+
+{# landing-page-expanded has unique styles, added for Privacy Sandbox and expanded landing section. #}
+
+{{ landingSectionExpanded(
+  "Measure digital ads",
+  "Proposals to collect accurate and useful measurement of digital ads, so you can get messages to the right people at the right time.",
+  sections.measure_ads,
+  "green",
+  "top-4",
+  true,
+  "image/VbsHyyQopiec0718rMq2kTE1hke2/cT27jgN3G7aYl9ftM0lt.svg",
+  "Analytics icon.",
+  250,
+  124,
+  "image/jxu1OdD7LKOGIDU7jURMpSH2lyK2/kdPhkPXy7R0mmcJaKyoi.svg",
+  "More documentation",
+  sections.related_measurement
+  )
+}}
