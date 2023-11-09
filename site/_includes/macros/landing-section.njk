@@ -4,7 +4,7 @@
 {% set sectionId = customId if customId else title %}
 
 <section
-  class="landing-section landing-section--{{type}} {% if ordered %} landing-section--ordered {% endif %} hairline rounded-lg width-full display-grid gap-top-400"
+  class="landing-section landing-section--{{type}} {% if ordered %} landing-section--ordered {% endif %} hairline rounded-lg width-full display-grid"
   style="--number-color: var(--color-{{ color }}-medium); --dot-color: var(--color-{{ color }}-lighter);"
   id="{{sectionId | slugify | ensureUniqueHrefInProduction}}">
 

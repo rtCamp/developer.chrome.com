@@ -1,0 +1,38 @@
+---
+layout: 'layouts/landing.njk'
+title: 'The Privacy Sandbox'
+description: 'A series of proposals to satisfy cross-site use cases without third-party cookies or other tracking mechanisms.'
+sections:
+  strengthen_privacy_boundaries:
+    - url: /docs/privacy-sandbox/chips
+    - url: /docs/privacy-sandbox/permissions-policy
+    - url: /docs/privacy-sandbox/fedcm
+    - url: /docs/privacy-sandbox/first-party-sets
+    - url: /docs/privacy-sandbox/fenced-frame
+    - url: /docs/privacy-sandbox/storage-partitioning
+---
+
+{% from 'macros/cards/hero-card-wide.njk' import heroCardWide with context %}
+{% from 'macros/cards/blog-card.njk' import blogCard with context %}
+{% from 'macros/icon.njk' import icon with context %}
+{% from 'macros/landing-section.njk' import landingSection with context %}
+{% from 'macros/landing-deco.njk' import landingDeco with context %}
+{% from 'macros/landing-section-expanded.njk' import landingSectionExpanded with context %}
+{% from 'macros/landing-section-usecases.njk' import landingSectionUseCases with context %}
+
+{# landing-page-expanded has unique styles, added for Privacy Sandbox and expanded landing section. #}
+
+{{ landingSection(
+  "Strengthen privacy boundaries",
+  "Proposals to create and strengthen cross-site privacy. This means information collected on one site is not automatically shared with another site, unless the user explicitly consents.",
+  sections.strengthen_privacy_boundaries,
+  "yellow",
+  "top-3",
+  false,
+  "image/VbsHyyQopiec0718rMq2kTE1hke2/tCE6xv0QdnKWNSEJQUbA.svg",
+  "Fence icon.",
+  250,
+  124,
+  "image/VbsHyyQopiec0718rMq2kTE1hke2/tCE6xv0QdnKWNSEJQUbA.svg"
+  )
+}}

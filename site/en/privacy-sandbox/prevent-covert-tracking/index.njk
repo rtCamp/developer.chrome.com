@@ -1,0 +1,42 @@
+---
+layout: 'layouts/landing.njk'
+title: 'The Privacy Sandbox'
+description: 'A series of proposals to satisfy cross-site use cases without third-party cookies or other tracking mechanisms.'
+sections:
+  prevent_covert_tracking:
+    - url: /docs/privacy-sandbox/ip-protection
+    - url: /docs/privacy-sandbox/privacy-budget
+    - url: /docs/privacy-sandbox/bounce-tracking-mitigations
+  prevent_covert_tracking_useragent:
+    - url: /docs/privacy-sandbox/user-agent
+    - url: /docs/privacy-sandbox/user-agent/snippets
+---
+
+{% from 'macros/cards/hero-card-wide.njk' import heroCardWide with context %}
+{% from 'macros/cards/blog-card.njk' import blogCard with context %}
+{% from 'macros/icon.njk' import icon with context %}
+{% from 'macros/landing-section.njk' import landingSection with context %}
+{% from 'macros/landing-deco.njk' import landingDeco with context %}
+{% from 'macros/landing-section-expanded.njk' import landingSectionExpanded with context %}
+{% from 'macros/landing-section-usecases.njk' import landingSectionUseCases with context %}
+
+{# landing-page-expanded has unique styles, added for Privacy Sandbox and expanded landing section. #}
+
+{{ landingSectionUseCases(
+  "Prevent covert tracking",
+  "Proposals to prevent third-parties from fingerprinting or collecting unlimited sensitive data.",
+  "User-Agent reduction",
+  sections.prevent_covert_tracking_useragent,
+  "",
+  "",
+  sections.prevent_covert_tracking,
+  "green",
+  "right",
+  true,
+  "image/VbsHyyQopiec0718rMq2kTE1hke2/yrsJmUfAnqDIDxjVYhXq.svg",
+  "Click icon.",
+  429,
+  278,
+  "image/VbsHyyQopiec0718rMq2kTE1hke2/yrsJmUfAnqDIDxjVYhXq.svg"
+  )
+}}
