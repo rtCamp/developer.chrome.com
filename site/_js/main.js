@@ -18,6 +18,7 @@
 import './store.js';
 import './analytics.js';
 import './a11y.js';
+import './utm-updater.js';
 
 // Web Components
 // These are components that appear on _every_ page.
