@@ -11,6 +11,15 @@ function updateUTMParameters() {
       return;
     }
 
+    // Open external links in a new tab
+    link.target = '_blank';
+    // Add rel="noopener noreferrer" for security and performance reasons
+    link.rel = 'noopener noreferrer';
+
+    if (url.hostname === 'github.com' || url.hostname === 'twitter.com') {
+      return;
+    }
+
     if (url.hostname) {
       // Update UTM parameters for external links
       url.searchParams.set('utm_source', 'psat');
@@ -18,11 +27,6 @@ function updateUTMParameters() {
 
       // Update the href attribute of the link
       link.href = url.toString();
-
-      // Open external links in a new tab
-      link.target = '_blank';
-      // Add rel="noopener noreferrer" for security and performance reasons
-      link.rel = 'noopener noreferrer';
     }
   });
 }
