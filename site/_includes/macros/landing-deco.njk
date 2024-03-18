@@ -4,14 +4,6 @@
       <div>
         {% set titleSlug = title | slugify %}
         <h2 id="{{ titleSlug }}" class="type--h3 color-{{color}}-darkest">
-          {% if smallImgSrc %}
-          <span class="sm-only landing-deco__icon">{% Img
-            src=smallImgSrc,
-            alt=imgAlt,
-            width=46,
-            height=46
-          %}</span>
-          {% endif %}
           <span>
             <a class="heading-link" href="#{{ titleSlug }}">#</a>
             {{ title | md | safe }}
